@@ -35,6 +35,7 @@ router.post('/update',
     body('status').isIn(['IN_PROGRESS','SHIPPED','DEPRECATED']).withMessage('Status must be one of "IN_PROGRESS","SHIPPED","DEPRECATED" '), 
     body('version').optional(), 
     body('assests').optional(),
+    body('productId').exists(),
     handleInputErrors, 
     (req, res) => {
 
