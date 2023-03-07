@@ -1,22 +1,17 @@
 import {Router} from 'express'
 import {body, validationResult} from 'express-validator';
+import * as productController from './handlers/product'
 import {handleInputErrors} from './modules/middleware'
 const router = Router();
 
 /** 
  * Product
 */
-router.get('/product', (req, res) => {
-    res.json({message: [1,2,3,4]})
-})
-router.get('/product/:id', () => {})
-router.put('/product/:id', body('name').notEmpty(), (req, res) => {
-   res.json({message: `${req.params.id} has name: ${req.body.name}`});
-})
-router.post('/product', body('name').notEmpty(), handleInputErrors, () => {
-
-})
-router.delete('/product/:id', () => {})
+router.get('/product', productController.getProducts);
+router.get('/product/:id', productController.getOneProduct);
+router.put('/product/:id', body('name').notEmpty(),handleInputErrors, productController.updateProduct);
+router.post('/product', body('name').notEmpty(), handleInputErrors, productController.createProduct);
+router.delete('/product/:id', productController.deleteProduct);
 
 /** 
  * Update
