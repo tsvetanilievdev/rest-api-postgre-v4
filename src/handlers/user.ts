@@ -1,18 +1,21 @@
 import prisma from "../db";
 import { createJWT, hashingPassword, comparePasswords } from "../modules/auth";
 
-export const createNewUser = async (req, res) => {
-    console.log('creating....')
-    const user = await prisma.user.create({
-        data: {
-            username: req.body.username,
-            password: await hashingPassword(req.body.password)
-        }
-    })
-
-    const token = createJWT(user);
-    res.json({token})
-
+export const createNewUser = async (req, res, next) => {
+    try {
+        const user = await prisma.user.create({
+            data: {
+                username: req.body.username,
+                password: await hashingPassword(req.body.password)
+            }
+        })
+    
+        const token = createJWT(user);
+        res.json({token})
+    } catch (error) {
+        error.type = 'input' // we assume that because of that, INSPECT error object to find it out!!!
+        next(error) // pass the error to next() and then catch it by the custom handler
+    }
 }
 
 export const signin = async (req, res) => {
