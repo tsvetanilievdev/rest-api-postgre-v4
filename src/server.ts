@@ -12,10 +12,13 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
-app.get('/', (req, res, next) => {
-    setTimeout(() => {
-        next(new Error('Async error!'))
-    }, 1000)
+// app.get('/', (req, res, next) => {
+//     setTimeout(() => {
+//         next(new Error('Async error!'))
+//     }, 1000)
+// })
+app.get('/', (req, res) => {
+    res.json({message: 'Hello from server!!!'})
 })
 app.use('/api', protect, router);
 
