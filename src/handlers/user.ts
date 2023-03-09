@@ -13,6 +13,8 @@ export const createNewUser = async (req, res, next) => {
         const token = createJWT(user);
         res.json({token})
     } catch (error) {
+        console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
+        console.log(error.message)
         error.type = 'input' // we assume that because of that, INSPECT error object to find it out!!!
         next(error) // pass the error to next() and then catch it by the custom handler
     }
