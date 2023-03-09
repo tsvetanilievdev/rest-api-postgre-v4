@@ -1,8 +1,8 @@
 import * as dotenv from 'dotenv';
-import app from './server';
 dotenv.config();
+import app from './server';
+import config from './config/index';
 
-
-app.listen(3001, () => {
-    console.log('API is running')
+app.listen(config.port, () => {
+    console.log(`API is running at port: ${config.port}`)
 })
